@@ -1,22 +1,45 @@
 import { useState } from "react";
 
+const StatisticLine = (props) => {
+  return (
+    <div>
+      <p>
+        {props.text} {props.value}
+      </p>
+    </div>
+  );
+};
+
+const Button = () => {
+  return (
+    <div>
+      <button>good</button>
+      <button>neutral</button>
+      <button>bad</button>
+    </div>
+  );
+};
+
 const Statistics = (props) => {
   const { good, neutral, bad } = props;
 
   return (
     <div>
       <h1>statistics </h1>
-      {good || neutral  || bad  ? (
+      {good || neutral || bad ? (
         <div>
-          <p>good {good}</p>
-          <p>neutral {neutral}</p>
-          <p>bad {bad}</p>
-          <p>all {good + neutral + bad}</p>
-          <p>
-            average{" "}
-            {(good * 1 + neutral * 0 + bad * -1) / (good + neutral + bad)}
-          </p>
-          <p>positive {(good / (good + neutral + bad)) * 100} %</p>
+          <StatisticLine text="good" value={good} />
+          <StatisticLine text="neutral" value={neutral} />
+          <StatisticLine text="bad" value={bad} />
+          <StatisticLine text="all" value={good + neutral + bad} />
+          <StatisticLine
+            text="average"
+            value={(good * 1 + neutral * 0 + bad * -1) / (good + neutral + bad)}
+          />
+          <StatisticLine
+            text="positive"
+            value={(good / (good + neutral + bad)) * 100 + " %"}
+          />
         </div>
       ) : (
         <p>No feedback given</p>
@@ -27,16 +50,14 @@ const Statistics = (props) => {
 
 const App = () => {
   // save clicks of each button to its own state
-  const [good, setGood] = useState(0);
-  const [neutral, setNeutral] = useState(0);
-  const [bad, setBad] = useState(0);
+  const [good, setGood] = useState(5);
+  const [neutral, setNeutral] = useState(2);
+  const [bad, setBad] = useState(1);
 
   return (
     <div>
       <h1>give feedback</h1>
-      <button>good</button>
-      <button>neutral</button>
-      <button>bad</button>
+      <Button />
       <Statistics good={good} neutral={neutral} bad={bad} />
     </div>
   );
