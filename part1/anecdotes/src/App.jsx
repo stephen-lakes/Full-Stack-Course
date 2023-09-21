@@ -25,8 +25,8 @@ const App = () => {
 
   return (
     <div>
-      <button onClick={handleClick}>select random</button>
-      {anecdotes[selected]}
+      <p>{anecdotes[selected]}</p>
+      <button onClick={handleClick}>next anecdote</button>
     </div>
   );
 };
