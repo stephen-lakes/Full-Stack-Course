@@ -26,28 +26,22 @@ const App = () => {
 
   const handleVote = () => {
     const copy = [...votes];
-    copy[selected] += 1 ;
+    copy[selected] += 1;
     setVotes(copy);
   };
 
   const [selected, setSelected] = useState(0);
-  console.log(selected);
-  console.log("VOTES", votes);
   return (
     <div>
-      <p
-        style={{
-          backgroundColor: "dodgerblue",
-          height: 100,
-          color: "#FFF",
-          padding: 10,
-        }}
-      >
-        {anecdotes[selected]}
-      </p>
-      <p>has {votes[selected]?votes[selected]: 0} votes</p>
+      <h1>Anecdote of the day</h1>
+      <p>{anecdotes[selected]}</p>
+      <p>has {votes[selected] ? votes[selected] : 0} votes</p>
       <button onClick={handleVote}>vote</button>
       <button onClick={handleClick}>next anecdote</button>
+
+      <h1>Anecdote with the most vote</h1>
+      <p>{anecdotes[votes.indexOf(Math.max(...votes))]}</p>
+      <p>has {Math.max(...votes)} votes</p>
     </div>
   );
 };
