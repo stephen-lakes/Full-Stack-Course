@@ -12,7 +12,7 @@ const App = () => {
     "The only way to go fast, is to go well.",
   ];
 
-  const [votes, setVotes] = useState([]);
+  const [votes, setVotes] = useState(new Array(anecdotes.length - 1).fill(0));
 
   const getRandInteger = (min, max) => {
     return Math.floor(Math.random() * (max - min) + min);
@@ -26,7 +26,7 @@ const App = () => {
 
   const handleVote = () => {
     const copy = [...votes];
-    copy[selected] ? (copy[selected] += 1) : (copy[selected] = 1);
+    copy[selected] += 1 ;
     setVotes(copy);
   };
 
