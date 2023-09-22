@@ -12,20 +12,41 @@ const App = () => {
     "The only way to go fast, is to go well.",
   ];
 
+  const [votes, setVotes] = useState([]);
+
   const getRandInteger = (min, max) => {
     return Math.floor(Math.random() * (max - min) + min);
     // return Math.floor(Math.random() * (max - min + 1) ) + min;
   };
 
   const handleClick = () => {
-    setSelected(getRandInteger(0, anecdotes.length - 1));
+    const val = getRandInteger(0, anecdotes.length - 1);
+    setSelected(val);
+  };
+
+  const handleVote = () => {
+    const copy = [...votes];
+    copy[selected] ? (copy[selected] += 1) : (copy[selected] = 1);
+    setVotes(copy);
   };
 
   const [selected, setSelected] = useState(0);
-
+  console.log(selected);
+  console.log("VOTES", votes);
   return (
     <div>
-      <p>{anecdotes[selected]}</p>
+      <p
+        style={{
+          backgroundColor: "dodgerblue",
+          height: 100,
+          color: "#FFF",
+          padding: 10,
+        }}
+      >
+        {anecdotes[selected]}
+      </p>
+      <p>has {votes[selected]?votes[selected]: 0} votes</p>
+      <button onClick={handleVote}>vote</button>
       <button onClick={handleClick}>next anecdote</button>
     </div>
   );
