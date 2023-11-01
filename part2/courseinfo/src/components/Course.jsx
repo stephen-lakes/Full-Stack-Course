@@ -15,6 +15,7 @@ const Content = ({ parts }) => {
           {part.name} {part.exercises}
         </p>
       ))}
+      <Total parts={parts} />
     </>
   );
 };
@@ -28,10 +29,12 @@ const Course = ({ course }) => {
   );
 };
 
-export default Course;
+const Total = ({ parts }) => {
+  return <>{parts[0].exercises + parts[1].exercises + parts[2].exercises}</>;
+};
+
 const Part = () => {
   return <></>;
 };
-const Total = () => {
-  return <></>;
-};
+
+export default Course;
