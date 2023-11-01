@@ -7,34 +7,43 @@ const Header = ({ name }) => {
 };
 
 const Content = ({ parts }) => {
-  console.log(parts);
   return (
     <>
       {parts.map((part) => (
-        <p>
-          {part.name} {part.exercises}
-        </p>
+        <Part key={part.id} part={part} />
       ))}
       <Total parts={parts} />
     </>
   );
 };
 
-const Course = ({ course }) => {
+const Course = ({ courses }) => {
   return (
     <div>
-      <Header name={course.name} />
-      <Content parts={course.parts} />
+      {courses.map((course) => (
+        <div key={course.id}>
+          <Header name={course.name} />
+          <Content parts={course.parts} />
+        </div>
+      ))}
     </div>
   );
 };
 
 const Total = ({ parts }) => {
-  return <>{parts.reduce((sum, part) => sum + part.exercises, 0)}</>;
+  return (
+    <>
+      <h4>total of {parts.reduce((sum, part) => sum + part.exercises, 0)} exercises</h4>
+    </>
+  );
 };
 
-const Part = () => {
-  return <></>;
+const Part = ({ part }) => {
+  return (
+    <p>
+      {part.name} {part.exercises}
+    </p>
+  );
 };
 
 export default Course;
