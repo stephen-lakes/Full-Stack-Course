@@ -7,6 +7,13 @@ function App() {
   const addPerson = (event) => {
     event.preventDefault();
     const newPersonObject = { name: newName };
+
+    for (const key in persons) {
+      if (JSON.stringify(persons[key]) === JSON.stringify(newPersonObject)) {
+        alert(`${newName} is already added to the phinebook`);
+        return;
+      }
+    }
     setPersons(persons.concat(newPersonObject));
     setNewName("");
   };
