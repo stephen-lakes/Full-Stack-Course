@@ -1,8 +1,66 @@
 import { useState } from "react";
 
+const Filter = ({ keyword, handleKeywordChange }) => {
+  return (
+    <div>
+      filter shown with:{" "}
+      <input value={keyword} onChange={handleKeywordChange} />
+    </div>
+  );
+};
+
+const PersonForm = ({
+  addPerson,
+  newName,
+  newNumber,
+  handleNameChange,
+  handleNumberChange,
+}) => {
+  return (
+    <>
+      <form onSubmit={addPerson}>
+        <div>
+          name: <input value={newName} onChange={handleNameChange} />
+        </div>
+        <div>
+          number: <input value={newNumber} onChange={handleNumberChange} />
+        </div>
+        <div>
+          <button type="submit">add</button>
+        </div>
+      </form>
+    </>
+  );
+};
+
+const Persons = ({ persons, keyword }) => {
+  return (
+    <>
+      {keyword
+        ? persons
+            .filter(
+              (person) => person.name.toLowerCase() === keyword.toLowerCase()
+            )
+            .map((person) => (
+              <p key={person.name}>
+                {person.name} {person.number}
+              </p>
+            ))
+        : persons.map((person) => (
+            <p key={person.name}>
+              {person.name} {person.number}
+            </p>
+          ))}
+    </>
+  );
+};
+
 function App() {
   const [persons, setPersons] = useState([
-    { name: "Charles Darwin", number: "040-123456" },
+    { name: "Arto Hellas", number: "040-123456", id: 1 },
+    { name: "Ada Lovelace", number: "33-44-5423523", id: 2 },
+    { name: "Dan Abramov", number: "12-34-234345", id: 3 },
+    { name: "Mary Poppendieck", number: "39-23-6423122", id: 4 },
   ]);
   const [newName, setNewName] = useState("new name....");
   const [newNumber, setNewNumber] = useState("phone number....");
@@ -38,43 +96,23 @@ function App() {
   return (
     <>
       <h2>Phonebook</h2>
-      {/* ======SEARCH FIELD=======*/}
 
-      <div>
-        filter shown with:{" "}
-        <input value={keyword} onChange={handleKeywordChange} />
-      </div>
-      <br />
-      <br />
+      {/* ======SEARCH FIELD=======*/}
+      <Filter keyword={keyword} handleKeywordChange={handleKeywordChange} />
 
       {/* ======ADD PERSON FORM=======*/}
-      <form onSubmit={addPerson}>
-        <div>
-          name: <input value={newName} onChange={handleNameChange} />
-        </div>
-        <div>
-          number: <input value={newNumber} onChange={handleNumberChange} />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <h3>Add a new </h3>
+      <PersonForm
+        addPerson={addPerson}
+        newName={newName}
+        newNumber={newNumber}
+        handleNameChange={handleNameChange}
+        handleNumberChange={handleNumberChange}
+      />
 
       {/* ===========NUMBERS===========*/}
-      <h2>Numbers</h2>
-      {keyword
-        ? persons
-            .filter((person) => person.name.toLowerCase() === keyword.toLowerCase())
-            .map((person) => (
-              <p key={person.name}>
-                {person.name} {person.number}
-              </p>
-            ))
-        : persons.map((person) => (
-            <p key={person.name}>
-              {person.name} {person.number}
-            </p>
-          ))}
+      <h3>Numbers</h3>
+      <Persons keyword={keyword} persons={persons} />
     </>
   );
 }
