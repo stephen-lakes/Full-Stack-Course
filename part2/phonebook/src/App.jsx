@@ -32,7 +32,7 @@ function App() {
   };
 
   const handleKeywordChange = (event) => {
-    setKeyword(event.target.value);
+    setKeyword(event.target.value.toLowerCase());
   };
 
   return (
@@ -44,7 +44,8 @@ function App() {
         filter shown with:{" "}
         <input value={keyword} onChange={handleKeywordChange} />
       </div>
-      <br /><br />
+      <br />
+      <br />
 
       {/* ======ADD PERSON FORM=======*/}
       <form onSubmit={addPerson}>
@@ -63,7 +64,7 @@ function App() {
       <h2>Numbers</h2>
       {keyword
         ? persons
-            .filter((person) => person.name === keyword)
+            .filter((person) => person.name.toLowerCase() === keyword)
             .map((person) => (
               <p key={person.name}>
                 {person.name} {person.number}
