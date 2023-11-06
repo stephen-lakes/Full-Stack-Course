@@ -72,7 +72,7 @@ function App() {
 
     for (const key in persons) {
       if (JSON.stringify(persons[key]) === JSON.stringify(newPersonObject)) {
-        alert(`${newName} is already added to the phinebook`);
+        alert(`${newName} is already added to the phonebook`);
         return;
       }
     }
