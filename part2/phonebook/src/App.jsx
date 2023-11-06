@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from 'axios';
 
 const Filter = ({ keyword, handleKeywordChange }) => {
   return (
@@ -56,15 +57,14 @@ const Persons = ({ persons, keyword }) => {
 };
 
 function App() {
-  const [persons, setPersons] = useState([
-    { name: "Arto Hellas", number: "040-123456", id: 1 },
-    { name: "Ada Lovelace", number: "33-44-5423523", id: 2 },
-    { name: "Dan Abramov", number: "12-34-234345", id: 3 },
-    { name: "Mary Poppendieck", number: "39-23-6423122", id: 4 },
-  ]);
+  const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("new name....");
   const [newNumber, setNewNumber] = useState("phone number....");
   const [keyword, setKeyword] = useState("");
+
+  const hook = () => {
+  }
+  useEffect(hook, [])
 
   const addPerson = (event) => {
     event.preventDefault();
