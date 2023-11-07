@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Note from "./components/Note";
+import noteService from "./services/notes"
 
 function App() {
   const [notes, setNotes] = useState([]);
@@ -46,7 +47,7 @@ function App() {
     const changedNote = { ...note, important: !note.important };
 
     axios.put(url, changedNote).then((response) => {
-      setNotes(notes.map((note) => (note.id !== id ? note : response.data)));
+      setNotes(notes.map(n => n.id !== id ? n : response.data));
     });
   };
 
