@@ -35,7 +35,7 @@ const PersonForm = ({
   );
 };
 
-const Persons = ({ persons, keyword }) => {
+const Persons = ({ persons, keyword, deleteContact }) => {
   return (
     <>
       {keyword
@@ -50,7 +50,8 @@ const Persons = ({ persons, keyword }) => {
             ))
         : persons.map((person) => (
             <p key={person.name}>
-              {person.name} {person.number}
+              {person.name} {person.number} {" "}
+              <button onClick={() => deleteContact(person.id)}>delete</button>
             </p>
           ))}
     </>
@@ -88,6 +89,11 @@ function App() {
     setNewNumber("");
   };
 
+  const deleteContact = (id) => {
+    phonebookService.deleteContact(id)
+    setPersons(persons.filter(person => person.id !== id))
+  }
+
   const handleNameChange = (event) => {
     setNewName(event.target.value);
   };
@@ -119,7 +125,7 @@ function App() {
 
       {/* ===========NUMBERS===========*/}
       <h3>Numbers</h3>
-      <Persons keyword={keyword} persons={persons} />
+      <Persons keyword={keyword} persons={persons} deleteContact={deleteContact} />
     </>
   );
 }
