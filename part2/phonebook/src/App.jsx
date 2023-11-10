@@ -90,6 +90,7 @@ function App() {
   };
 
   const deleteContact = (id) => {
+    window.confirm(`Delete Conatct`)
     phonebookService.deleteContact(id)
     setPersons(persons.filter(person => person.id !== id))
   }
