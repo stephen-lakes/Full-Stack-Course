@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from 'axios';
+import axios from "axios";
 
 const Filter = ({ keyword, handleKeywordChange }) => {
   return (
@@ -62,14 +62,11 @@ function App() {
   const [newNumber, setNewNumber] = useState("phone number....");
   const [keyword, setKeyword] = useState("");
 
-  const hook = () => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        setPersons(response.data)
-      })
-  }
-  useEffect(hook, [])
+  useEffect(() => {
+    axios.get("http://localhost:3001/persons").then((response) => {
+      setPersons(response.data);
+    });
+  }, []);
 
   const addPerson = (event) => {
     event.preventDefault();
@@ -81,7 +78,11 @@ function App() {
         return;
       }
     }
-    setPersons(persons.concat(newPersonObject));
+
+    axios
+      .post("http://localhost:3001/persons", newPersonObject)
+      .then((response) => setPersons(persons.concat(response.data)));
+
     setNewName("");
     setNewNumber("");
   };
