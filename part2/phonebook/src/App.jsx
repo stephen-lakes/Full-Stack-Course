@@ -50,8 +50,8 @@ const Persons = ({ persons, keyword, deleteContact }) => {
             ))
         : persons.map((person) => (
             <p key={person.name}>
-              {person.name} {person.number} {" "}
-              <button onClick={() => deleteContact(person.id)}>delete</button>
+              {person.name} {person.number}{" "}
+              <button onClick={() => deleteContact(person)}>delete</button>
             </p>
           ))}
     </>
@@ -89,11 +89,11 @@ function App() {
     setNewNumber("");
   };
 
-  const deleteContact = (id) => {
-    window.confirm(`Delete Conatct`)
-    phonebookService.deleteContact(id)
-    setPersons(persons.filter(person => person.id !== id))
-  }
+  const deleteContact = (contactObj) => {
+    window.confirm(`Delete ${contactObj.name} ?`);
+    phonebookService.deleteContact(contactObj.id);
+    setPersons(persons.filter((person) => person.id !== contactObj.id));
+  };
 
   const handleNameChange = (event) => {
     setNewName(event.target.value);
@@ -126,7 +126,11 @@ function App() {
 
       {/* ===========NUMBERS===========*/}
       <h3>Numbers</h3>
-      <Persons keyword={keyword} persons={persons} deleteContact={deleteContact} />
+      <Persons
+        keyword={keyword}
+        persons={persons}
+        deleteContact={deleteContact}
+      />
     </>
   );
 }
