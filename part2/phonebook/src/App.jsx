@@ -58,11 +58,40 @@ const Persons = ({ persons, keyword, deleteContact }) => {
   );
 };
 
+const Notification = ({ message, type }) => {
+  if (message === null) {
+    return null;
+  }
+  return (
+    <>
+      <div className={`${type === "success" ? "success" : "error"}`}>
+        {message}
+      </div>
+    </>
+  );
+};
+
+const Footer = () => {
+  const footerStyle = {
+    color: "green",
+    fontStyle: "italic",
+    fontSize: 16,
+  };
+  return (
+    <div style={footerStyle}>
+      <br />
+      <em>Phonebook app, Department of Computer Science of Helsinki 2022</em>
+    </div>
+  );
+};
+
 function App() {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [keyword, setKeyword] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
 
   useEffect(() => {
     phonebookService
@@ -79,16 +108,27 @@ function App() {
         alert(`${newName} is already added to the phonebook`);
 
         if (persons[key].number !== newPersonObject.number) {
-          alert(`${newName}'s Phone Number will be updated to ${newPersonObject.number}`);
+          // alert(
+          //   `${newName}'s Phone Number will be updated to ${newPersonObject.number}`
+          // );
           phonebookService
             .update(persons[key].id, newPersonObject)
-            .then((responseData) =>
+            .then((responseData) => {
               setPersons(
                 persons
                   .filter((p) => p.id !== persons[key].id)
                   .concat(newPersonObject)
-              )
-            );
+              );
+              setSuccessMessage(`${newPersonObject.name} updated`);
+              setTimeout(() => setSuccessMessage(null), 5000);
+            })
+            .catch((err) => {
+              setErrorMessage(
+                `Note is not saved to the server '${newPersonObject.name}' was already removed from the server`
+              );
+            });
+          setTimeout(() => setErrorMessage(null), 5000);
+          setErrorMessage(null);
         }
         setNewName("");
         setNewNumber("");
@@ -103,11 +143,17 @@ function App() {
 
     setNewName("");
     setNewNumber("");
+    setSuccessMessage(`Added ${newPersonObject.name}`);
+    setTimeout(() => {
+      setSuccessMessage(null);
+    }, 5000);
   };
 
   const deleteContact = (contactObj) => {
     if (window.confirm(`Delete ${contactObj.name} ?`)) {
       phonebookService.deleteContact(contactObj.id);
+      setSuccessMessage(`${contactObj.name} deleted`);
+      setTimeout(() => setSuccessMessage(null), 5000);
       setPersons(persons.filter((person) => person.id !== contactObj.id));
     }
   };
@@ -127,6 +173,8 @@ function App() {
   return (
     <>
       <h2>Phonebook</h2>
+      <Notification message={errorMessage} type="error" />
+      <Notification message={successMessage} type="success" />
 
       {/* ======SEARCH FIELD=======*/}
       <Filter keyword={keyword} handleKeywordChange={handleKeywordChange} />
@@ -148,6 +196,8 @@ function App() {
         persons={persons}
         deleteContact={deleteContact}
       />
+
+      <Footer />
     </>
   );
 }
