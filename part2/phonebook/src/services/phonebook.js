@@ -6,6 +6,11 @@ const getAll = () => {
   return request.then((response) => response.data);
 };
 
+const getById = (id) => {
+  const request = axios.get(`${baseUrl}/${id}`);
+  return request.then((response) => console.log(response.data));
+};
+
 const create = (newObject) => {
   const request = axios.post(baseUrl, newObject);
   return request.then((response) => response.data);
@@ -16,8 +21,15 @@ const deleteContact = (id) => {
   return request;
 };
 
+const update = (id, updatedTodo) => {
+  const request = axios.put(`${baseUrl}/${id}`, updatedTodo);
+  return request.then((response) => console.log(response.data));
+};
+
 export default {
   getAll,
+  getById,
   create,
+  update,
   deleteContact,
 };
