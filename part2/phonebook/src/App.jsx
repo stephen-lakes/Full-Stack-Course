@@ -60,8 +60,8 @@ const Persons = ({ persons, keyword, deleteContact }) => {
 
 function App() {
   const [persons, setPersons] = useState([]);
-  const [newName, setNewName] = useState("new name....");
-  const [newNumber, setNewNumber] = useState("phone number....");
+  const [newName, setNewName] = useState("");
+  const [newNumber, setNewNumber] = useState("");
   const [keyword, setKeyword] = useState("");
 
   useEffect(() => {
@@ -90,9 +90,10 @@ function App() {
   };
 
   const deleteContact = (contactObj) => {
-    window.confirm(`Delete ${contactObj.name} ?`);
-    phonebookService.deleteContact(contactObj.id);
-    setPersons(persons.filter((person) => person.id !== contactObj.id));
+    if (window.confirm(`Delete ${contactObj.name} ?`)) {
+      phonebookService.deleteContact(contactObj.id);
+      setPersons(persons.filter((person) => person.id !== contactObj.id));
+    }
   };
 
   const handleNameChange = (event) => {
