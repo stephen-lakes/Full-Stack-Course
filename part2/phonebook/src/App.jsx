@@ -75,8 +75,24 @@ function App() {
     const newPersonObject = { name: newName, number: newNumber };
 
     for (const key in persons) {
-      if (JSON.stringify(persons[key]) === JSON.stringify(newPersonObject)) {
+      if (persons[key].name === newPersonObject.name) {
         alert(`${newName} is already added to the phonebook`);
+
+        if (persons[key].number !== newPersonObject.number) {
+          alert(`${newName}'s Phone Number will be updated to ${newPersonObject.number}`);
+          phonebookService
+            .update(persons[key].id, newPersonObject)
+            .then((responseData) =>
+              setPersons(
+                persons
+                  .filter((p) => p.id !== persons[key].id)
+                  .concat(newPersonObject)
+              )
+            );
+        }
+        setNewName("");
+        setNewNumber("");
+
         return;
       }
     }
