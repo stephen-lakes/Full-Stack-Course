@@ -23,7 +23,7 @@ const deleteContact = (id) => {
 
 const update = (id, updatedTodo) => {
   const request = axios.put(`${baseUrl}/${id}`, updatedTodo);
-  return request.then((response) => console.log(response.data));
+  return request.then((response) => response.data);
 };
 
 export default {
