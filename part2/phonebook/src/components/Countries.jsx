@@ -5,6 +5,7 @@ const Countries = () => {
   const [inputValue, setInputValue] = useState("");
   const [countries, setCountries] = useState([]);
   const [filteredCountries, setFilteredCountries] = useState([]);
+  const [info, setInfo] = useState(null);
 
   const axiosInstance = axios.create({
     baseURL: "https://studies.cs.helsinki.fi/restcountries/api/all",
@@ -27,6 +28,16 @@ const Countries = () => {
     );
   }, [inputValue]);
 
+  const handleShow = (countryName) => {
+    axiosInstance
+      .get(
+        `https://studies.cs.helsinki.fi/restcountries/api/name/${countryName.toLowerCase()}`
+      )
+      .then((response) => {
+        setInfo(response.data);
+      });
+  };
+
   return (
     <div>
       find countries{" "}
@@ -37,36 +48,75 @@ const Countries = () => {
       {/* SEARCH FILTER RESULT */}
       <div>
         {filteredCountries.length === 1 ? (
-          <div>
-            <h1>{filteredCountries[0].name.common}</h1>
-            <p>Capital {filteredCountries[0].capital}</p>
-            <p>Area: {filteredCountries[0].area}</p>
-            <h3>Languages</h3>
-            <ul>
-              {Object.keys(filteredCountries[0].languages).map((key) => (
-                <li key={key}>
-                  {key}: {filteredCountries[0].languages[key]}
-                </li>
-              ))}
-            </ul>
-
-            {/* FLAG */}
-            <div style={{ width: 200, height: 200 }}>
-              <img src={filteredCountries[0].flags.svg} alt="" />
-            </div>
-          </div>
+          <Summary country={filteredCountries[0]} />
         ) : filteredCountries.length > 10 ? (
           <p>Too many matches, specify another filter</p>
         ) : (
           filteredCountries.map((c) => (
             <div key={c.name.common}>
               <span>{c.name.common}</span>
-              <button>show</button>
+              <button onClick={() => handleShow(c.name.common)}>show</button>
             </div>
           ))
         )}
       </div>
+
+      {/* COUNTRY INFO ON CLICK SHOW BUTTON */}
+      <Info countryInfo={info} />
+
     </div>
+  );
+};
+
+const Info = ({ countryInfo }) => {
+  return (
+    <>
+      {countryInfo && (
+        <div>
+          <h1>{countryInfo.name.common}</h1>
+          <p>Capital {countryInfo.capital}</p>
+          <p>Area: {countryInfo.area}</p>
+          <h3>Languages</h3>
+          <ul>
+            {Object.keys(countryInfo.languages).map((key) => (
+              <li key={key}>
+                {key}: {countryInfo.languages[key]}
+              </li>
+            ))}
+          </ul>
+
+          {/* FLAG */}
+          <div style={{ width: 200, height: 200 }}>
+            <img src={countryInfo.flags.svg} alt="" />
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
+
+const Summary = ({ country }) => {
+  return (
+    <>
+      <div>
+        <h1>{country.name.common}</h1>
+        <p>Capital {country.capital}</p>
+        <p>Area: {country.area}</p>
+        <h3>Languages</h3>
+        <ul>
+          {Object.keys(country.languages).map((key) => (
+            <li key={key}>
+              {key}: {country.languages[key]}
+            </li>
+          ))}
+        </ul>
+
+        {/* FLAG */}
+        <div style={{ width: 200, height: 200 }}>
+          <img src={country.flags.svg} alt="" />
+        </div>
+      </div>
+    </>
   );
 };
 
