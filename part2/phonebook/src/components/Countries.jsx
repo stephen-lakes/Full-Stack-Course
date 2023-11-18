@@ -31,13 +31,24 @@ const Countries = () => {
     <div>
       find countries{" "}
       <input
-        inputValue={inputValue}
+        value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
       />
+
+      {/* SEARCH FILTER RESULT */}
       <div>
-        {filteredCountries.map((c) => (
-          <p key={c.name.common}>{c.name.common}</p>
-        ))}
+        {filteredCountries.length === 1 ? (
+          <p>Info about {inputValue}</p>
+        ) : filteredCountries.length > 10 ? (
+          <p>Too many matches, specify another filter</p>
+        ) : (
+          filteredCountries.map((c) => (
+            <div key={c.name.common}>
+              <span>{c.name.common}</span>
+              <button>show</button>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );
