@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import phonebookService from "./services/phonebook";
+import ExchangeRates from "./components/ExchangeRates";
+import Countries from "./components/Countries";
 
 const Filter = ({ keyword, handleKeywordChange }) => {
   return (
@@ -198,6 +200,7 @@ function App() {
       />
 
       <Footer />
+      <Countries />
     </>
   );
 }
