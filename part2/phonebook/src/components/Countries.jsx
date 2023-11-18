@@ -34,11 +34,27 @@ const Countries = () => {
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
       />
-
       {/* SEARCH FILTER RESULT */}
       <div>
         {filteredCountries.length === 1 ? (
-          <p>Info about {inputValue}</p>
+          <div>
+            <h1>{filteredCountries[0].name.common}</h1>
+            <p>Capital {filteredCountries[0].capital}</p>
+            <p>Area: {filteredCountries[0].area}</p>
+            <h3>Languages</h3>
+            <ul>
+              {Object.keys(filteredCountries[0].languages).map((key) => (
+                <li key={key}>
+                  {key}: {filteredCountries[0].languages[key]}
+                </li>
+              ))}
+            </ul>
+
+            {/* FLAG */}
+            <div style={{ width: 200, height: 200 }}>
+              <img src={filteredCountries[0].flags.svg} alt="" />
+            </div>
+          </div>
         ) : filteredCountries.length > 10 ? (
           <p>Too many matches, specify another filter</p>
         ) : (
