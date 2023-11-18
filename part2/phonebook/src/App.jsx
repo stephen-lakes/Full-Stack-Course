@@ -124,7 +124,7 @@ function App() {
             })
             .catch((err) => {
               setErrorMessage(
-                `Note is not saved to the server '${newPersonObject.name}' was already removed from the server`
+                `Information of '${newPersonObject.name}' has already removed from the server`
               );
             });
           setTimeout(() => setErrorMessage(null), 5000);
