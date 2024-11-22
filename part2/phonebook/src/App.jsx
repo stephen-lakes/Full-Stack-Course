@@ -42,8 +42,8 @@ const Persons = ({ persons, keyword, deleteContact }) => {
     <>
       {keyword
         ? persons
-            .filter(
-              (person) => person.name.toLowerCase().includes(keyword.toLowerCase()) 
+            .filter((person) =>
+              person.name.toLowerCase().includes(keyword.toLowerCase())
             )
             .map((person) => (
               <p key={person.name}>
@@ -107,12 +107,10 @@ function App() {
 
     for (const key in persons) {
       if (persons[key].name === newPersonObject.name) {
-        alert(`${newName} is already added to the phonebook`);
-
         if (persons[key].number !== newPersonObject.number) {
-          // alert(
-          //   `${newName}'s Phone Number will be updated to ${newPersonObject.number}`
-          // );
+          alert(
+            `${newName}'s is already added to phonebook, replace the old one with the new one?`
+          );
           phonebookService
             .update(persons[key].id, newPersonObject)
             .then((responseData) => {
@@ -131,6 +129,8 @@ function App() {
             });
           setTimeout(() => setErrorMessage(null), 5000);
           setErrorMessage(null);
+        } else {
+          alert(`${newName} is already added to the phonebook`);
         }
         setNewName("");
         setNewNumber("");
