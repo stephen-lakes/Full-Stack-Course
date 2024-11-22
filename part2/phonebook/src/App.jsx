@@ -43,7 +43,7 @@ const Persons = ({ persons, keyword, deleteContact }) => {
       {keyword
         ? persons
             .filter(
-              (person) => person.name.toLowerCase() === keyword.toLowerCase()
+              (person) => person.name.toLowerCase().includes(keyword.toLowerCase()) 
             )
             .map((person) => (
               <p key={person.name}>
