@@ -2,12 +2,14 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 const api_key = import.meta.env.VITE_SOME_KEY;
+// const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${api_key}&units=metric`;
 
 const Countries = () => {
   const [inputValue, setInputValue] = useState("");
   const [countries, setCountries] = useState([]);
   const [filteredCountries, setFilteredCountries] = useState([]);
   const [info, setInfo] = useState(null);
+  const [cityName, setCityName] = useState("");
   const [weather, setWeather] = useState(null);
 
   const axiosInstance = axios.create({
@@ -29,7 +31,21 @@ const Countries = () => {
         country.name.common.toLowerCase().includes(inputValue.toLowerCase())
       )
     );
+
+    if (filteredCountries.length === 1)
+      setCityName(filteredCountries[0].name.common);
   }, [inputValue]);
+
+  useEffect(() => {
+    if (cityName) {
+      try {
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${api_key}&units=metric`;
+        axiosInstance.get(url).then((response) => setWeather(response.data));
+      } catch (err) {
+        console.error("Error fetching weather data");
+      }
+    }
+  }, [cityName]);
 
   const handleShow = (countryName) => {
     axiosInstance
@@ -39,13 +55,7 @@ const Countries = () => {
       .then((response) => {
         setInfo(response.data);
       });
-  };
-
-  const getWeatherData = async (countryName) => {
-    try {
-      const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${countryName}&appid=${api_key}&units=metric`);
-
-    } catch (err) {}
+    setCityName(countryName);
   };
 
   return (
@@ -58,7 +68,9 @@ const Countries = () => {
       {/* SEARCH FILTER RESULT */}
       <div>
         {filteredCountries.length === 1 ? (
-          <Summary country={filteredCountries[0]} />
+          <>
+            <Summary country={filteredCountries[0]} weather={weather} />
+          </>
         ) : filteredCountries.length > 10 ? (
           <p>Too many matches, specify another filter</p>
         ) : (
@@ -103,7 +115,7 @@ const Info = ({ countryInfo }) => {
   );
 };
 
-const Summary = ({ country }) => {
+const Summary = ({ country, weather }) => {
   return (
     <>
       <div>
@@ -120,20 +132,24 @@ const Summary = ({ country }) => {
         </ul>
 
         {/* FLAG */}
-        <div style={{ width: 200, height: 200 }}>
+        <div style={{ width: 200, height: "auto" }}>
           <img src={country.flags.svg} alt="" />
         </div>
+        {/* WEATHER DATA */}
+        {weather ? (
+          <div>
+            <h2>Weather in {weather.name}</h2>
+            <p>Temperature {weather.main.temp} Celcius</p>
+            <img
+              src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
+              alt={weather.weather[0].description}
+            />
+            <p>Wind {weather.wind.speed} m/s</p>
+          </div>
+        ) : (
+          <p>no weather info for the location </p>
+        )}
       </div>
-    </>
-  );
-};
-
-const WeatherInfo = ({ countryName }) => {
-  return (
-    <>
-      <h1>Weather in {countryName} </h1>
-      <p>Temperature </p>
-      <p>Wind</p>
     </>
   );
 };
