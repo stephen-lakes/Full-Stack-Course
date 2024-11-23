@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
+const api_key = import.meta.env.VITE_SOME_KEY;
+
 const Countries = () => {
   const [inputValue, setInputValue] = useState("");
   const [countries, setCountries] = useState([]);
@@ -38,6 +40,13 @@ const Countries = () => {
       });
   };
 
+  const getWeatherData = async (countryName) => {
+    try {
+      const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${countryName}&appid=${api_key}&units=metric`);
+
+    } catch (err) {}
+  };
+
   return (
     <div>
       find countries{" "}
@@ -60,10 +69,8 @@ const Countries = () => {
           ))
         )}
       </div>
-
       {/* COUNTRY INFO ON CLICK SHOW BUTTON */}
       <Info countryInfo={info} />
-
     </div>
   );
 };
@@ -116,6 +123,16 @@ const Summary = ({ country }) => {
           <img src={country.flags.svg} alt="" />
         </div>
       </div>
+    </>
+  );
+};
+
+const WeatherInfo = ({ countryName }) => {
+  return (
+    <>
+      <h1>Weather in {countryName} </h1>
+      <p>Temperature </p>
+      <p>Wind</p>
     </>
   );
 };
