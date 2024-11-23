@@ -135,23 +135,27 @@ const Summary = ({ country, weather }) => {
         <div style={{ width: 200, height: "auto" }}>
           <img src={country.flags.svg} alt="" />
         </div>
-        {/* WEATHER DATA */}
-        {weather ? (
-          <div>
-            <h2>Weather in {weather.name}</h2>
-            <p>Temperature {weather.main.temp} Celcius</p>
-            <img
-              src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
-              alt={weather.weather[0].description}
-            />
-            <p>Wind {weather.wind.speed} m/s</p>
-          </div>
-        ) : (
-          <p>no weather info for the location </p>
-        )}
       </div>
     </>
   );
+};
+
+const weather = ({ weather }) => {
+  {
+    weather ? (
+      <div>
+        <h2>Weather in {weather.name}</h2>
+        <p>Temperature {weather.main.temp} Celcius</p>
+        <img
+          src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
+          alt={weather.weather[0].description}
+        />
+        <p>Wind {weather.wind.speed} m/s</p>
+      </div>
+    ) : (
+      <p>no weather info for the location </p>
+    );
+  }
 };
 
 export default Countries;
