@@ -140,7 +140,7 @@ const Summary = ({ country, weather }) => {
   );
 };
 
-const weather = ({ weather }) => {
+const Weather = ({ weather }) => {
   {
     weather ? (
       <div>
