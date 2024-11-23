@@ -69,7 +69,7 @@ const Countries = () => {
       <div>
         {filteredCountries.length === 1 ? (
           <>
-            <Summary country={filteredCountries[0]} weather={weather} />
+            <Summary country={filteredCountries[0]} />
           </>
         ) : filteredCountries.length > 10 ? (
           <p>Too many matches, specify another filter</p>
@@ -115,7 +115,7 @@ const Info = ({ countryInfo }) => {
   );
 };
 
-const Summary = ({ country, weather }) => {
+const Summary = ({ country }) => {
   return (
     <>
       <div>
