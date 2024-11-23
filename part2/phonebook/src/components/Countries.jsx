@@ -69,7 +69,7 @@ const Countries = () => {
       <div>
         {filteredCountries.length === 1 ? (
           <>
-            <Summary country={filteredCountries[0]} />
+            <Summary country={filteredCountries[0]} weather={weather} />
           </>
         ) : filteredCountries.length > 10 ? (
           <p>Too many matches, specify another filter</p>
@@ -85,7 +85,6 @@ const Countries = () => {
       {/* COUNTRY INFO ON CLICK SHOW BUTTON */}
       <Info countryInfo={info} />
       {/* WEATHER DATA FOR COUNTRY */}
-      <Weather weather={weather} />
     </div>
   );
 };
@@ -117,7 +116,7 @@ const Info = ({ countryInfo }) => {
   );
 };
 
-const Summary = ({ country }) => {
+const Summary = ({ country, weather }) => {
   return (
     <>
       <div>
@@ -137,27 +136,22 @@ const Summary = ({ country }) => {
         <div style={{ width: 200, height: "auto" }}>
           <img src={country.flags.svg} alt="" />
         </div>
+        {weather ? (
+          <div>
+            <h2>Weather in {weather.name}</h2>
+            <p>Temperature {weather.main.temp} Celcius</p>
+            <img
+              src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
+              alt={weather.weather[0].description}
+            />
+            <p>Wind {weather.wind.speed} m/s</p>
+          </div>
+        ) : (
+          <p>no weather info for the location </p>
+        )}
       </div>
     </>
   );
-};
-
-const Weather = ({ weather }) => {
-  {
-    weather ? (
-      <div>
-        <h2>Weather in {weather.name}</h2>
-        <p>Temperature {weather.main.temp} Celcius</p>
-        <img
-          src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
-          alt={weather.weather[0].description}
-        />
-        <p>Wind {weather.wind.speed} m/s</p>
-      </div>
-    ) : (
-      <p>no weather info for the location </p>
-    );
-  }
 };
 
 export default Countries;
