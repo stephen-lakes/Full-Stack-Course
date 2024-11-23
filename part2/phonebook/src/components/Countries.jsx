@@ -84,6 +84,8 @@ const Countries = () => {
       </div>
       {/* COUNTRY INFO ON CLICK SHOW BUTTON */}
       <Info countryInfo={info} />
+      {/* WEATHER DATA FOR COUNTRY */}
+      <Weather weather={weather} />
     </div>
   );
 };
