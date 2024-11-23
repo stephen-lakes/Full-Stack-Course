@@ -8,6 +8,7 @@ const Countries = () => {
   const [countries, setCountries] = useState([]);
   const [filteredCountries, setFilteredCountries] = useState([]);
   const [info, setInfo] = useState(null);
+  const [weather, setWeather] = useState(null);
 
   const axiosInstance = axios.create({
     baseURL: "https://studies.cs.helsinki.fi/restcountries/api/all",
