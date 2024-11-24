@@ -32,12 +32,13 @@ app.get("/api/notes", (request, response) => {
   response.json(notes);
 });
 
+app.get("/api/notes/:id", (request, response) => {
+  const id = request.params.id;
+  const note = notes.find((note) => note.id === id);
+  response.json(note);
+});
+
 const PORT = 3001;
 // bind the app variable to listen to HTTP requests sent to port 3001
 app.listen(PORT);
 console.log(`Server running on port ${PORT}`);
-
-// The event handler function accepts 2 parameters
-// The request and the response parameters
-// The request parameter contains all information about the HTTP request
-// The repsonse parameter is used to define how the request is responded to
