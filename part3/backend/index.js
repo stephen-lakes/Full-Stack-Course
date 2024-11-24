@@ -25,7 +25,7 @@ const notes = [
 // the request is responded to with the status code 200 and
 // set the Content-Type to text/plain and the content of the site to be returned set to Hello World
 const app = http.createServer((request, response) => {
-  response.writeHead(200, { "Content-type": "text/plain" });
+  response.writeHead(200, { "Content-type": "application/json" });
   response.end("Hello World");
 });
 
