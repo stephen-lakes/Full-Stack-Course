@@ -4,7 +4,7 @@ const express = require("express");
 // creeate a web server
 const app = express();
 
-const notes = [
+let notes = [
   {
     id: "1",
     content: "HTML is easy",
