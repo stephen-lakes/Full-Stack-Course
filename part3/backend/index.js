@@ -22,11 +22,22 @@ const notes = [
   },
 ];
 
+// GET request to base URL '/'
 app.get("/", (request, response) => {
   response.send("<h1>Hello World!</h1>");
+});
+
+// GET request to '/api/note' endpoint
+app.get("/api/notes", (request, response) => {
+  response.json(notes);
 });
 
 const PORT = 3001;
 // bind the app variable to listen to HTTP requests sent to port 3001
 app.listen(PORT);
 console.log(`Server running on port ${PORT}`);
+
+// The event handler function accepts 2 parameters
+// The request and the response parameters
+// The request parameter contains all information about the HTTP request
+// The repsonse parameter is used to define how the request is responded to
