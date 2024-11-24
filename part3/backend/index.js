@@ -35,11 +35,14 @@ app.get("/api/notes", (request, response) => {
   response.json(notes);
 });
 
-// POST request to /api/notes endpoint
-app.post("/api/notes", (request, response) => {
+const generateId = () => {
   const maxId =
     notes.length > 0 ? Math.max(...notes.map((n) => Number(n.id))) : 0;
+  return String(maxId + 1);
+};
 
+// POST request to /api/notes endpoint
+app.post("/api/notes", (request, response) => {
   const body = request.body;
   if (!body.content) {
     return response.status(400).json({
