@@ -53,7 +53,7 @@ app.post("/api/notes", (request, response) => {
   const note = {
     content: body.content,
     important: Boolean(body.important) || false,
-    id: String(maxId + 1),
+    id: generateId(),
   };
 
   notes = notes.concat(note);
