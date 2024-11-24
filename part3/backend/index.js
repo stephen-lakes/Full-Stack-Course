@@ -22,6 +22,9 @@ let notes = [
   },
 ];
 
+// express json parser: gives easy access to data coming in
+app.use(express.json());
+
 // GET request to base URL '/'
 app.get("/", (request, response) => {
   response.send("<h1>Hello World!</h1>");
