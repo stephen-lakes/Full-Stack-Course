@@ -1,5 +1,8 @@
-// import Node's web server module
-const http = require("http");
+// import express
+const express = require("express");
+
+// creeate a web server
+const app = express();
 
 const notes = [
   {
@@ -19,14 +22,8 @@ const notes = [
   },
 ];
 
-// create a new web server
-// register an event handler that is called every time an HTTP request
-// is made to the server's address http://localhost:3001
-// the request is responded to with the status code 200 and
-// set the Content-Type to text/plain and the content of the site to be returned set to Hello World
-const app = http.createServer((request, response) => {
-  response.writeHead(200, { "Content-type": "application/json" });
-  response.end(JSON.stringify(notes));
+app.get("/", (request, response) => {
+  response.send("<h1>Hello World!</h1>");
 });
 
 const PORT = 3001;
