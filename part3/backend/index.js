@@ -1,6 +1,24 @@
 // import Node's web server module
 const http = require("http");
 
+const notes = [
+  {
+    id: "1",
+    content: "HTML is easy",
+    imortant: true,
+  },
+  {
+    id: "2",
+    content: "Browser can execute only javascript",
+    imortant: false,
+  },
+  {
+    id: "3",
+    content: "GET and POST are the most important methids of HTTP protocol",
+    imortant: true,
+  },
+];
+
 // create a new web server
 // register an event handler that is called every time an HTTP request
 // is made to the server's address http://localhost:3001
