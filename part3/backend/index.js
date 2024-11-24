@@ -35,6 +35,13 @@ app.get("/api/notes", (request, response) => {
   response.json(notes);
 });
 
+// POST request to /api/notes endpoint
+app.post("/api/notes", (request, response) => {
+  const note = request.body;
+  console.log(note);
+  response.json(note);
+});
+
 app.get("/api/notes/:id", (request, response) => {
   const id = request.params.id;
   const note = notes.find((note) => note.id === id);
