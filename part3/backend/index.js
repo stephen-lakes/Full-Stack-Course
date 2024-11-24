@@ -26,7 +26,7 @@ const notes = [
 // set the Content-Type to text/plain and the content of the site to be returned set to Hello World
 const app = http.createServer((request, response) => {
   response.writeHead(200, { "Content-type": "application/json" });
-  response.end("Hello World");
+  response.end(JSON.stringify(notes));
 });
 
 const PORT = 3001;
