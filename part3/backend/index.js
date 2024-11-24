@@ -44,6 +44,12 @@ app.get("/api/notes/:id", (request, response) => {
   response.json(note);
 });
 
+app.delete("/api/notes/:id", (request, response) => {
+  const id = request.params.id;
+  const notes = notes.filter((note) => note.id !== id);
+  response.status(204).end();
+});
+
 const PORT = 3001;
 // bind the app variable to listen to HTTP requests sent to port 3001
 app.listen(PORT);
