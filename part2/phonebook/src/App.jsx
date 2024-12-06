@@ -141,14 +141,20 @@ function App() {
 
     phonebookService
       .create(newPersonObject)
-      .then((responseData) => setPersons(persons.concat(responseData)));
-
-    setNewName("");
-    setNewNumber("");
-    setSuccessMessage(`Added ${newPersonObject.name}`);
-    setTimeout(() => {
-      setSuccessMessage(null);
-    }, 5000);
+      .then((responseData) => {
+        setPersons(persons.concat(responseData));
+        setSuccessMessage(`Added ${newPersonObject.name}`);
+        setNewName("");
+        setNewNumber("");
+        setTimeout(() => {
+          setSuccessMessage(null);
+        }, 5000);
+      })
+      .catch((error) => {
+        console.log(error.response.data.error);
+        setErrorMessage(error.response.data.error.message);
+        setTimeout(() => setErrorMessage(null), 5000);
+      });
   };
 
   const deleteContact = (contactObj) => {
